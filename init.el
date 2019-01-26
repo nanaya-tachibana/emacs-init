@@ -20,6 +20,8 @@
     magit
     markdown-mode
     rainbow-delimiters
+    fill-column-indicator
+    direnv
     smart-mode-line
     web-mode
     yaml-mode
@@ -52,14 +54,25 @@
 ;;display column number
 (column-number-mode t)
 ;;move all backup files to one directory
-(setq backup-directory-alist '(("." . "~/.emacs_backup")))       
-;;set default theme
-;; (add-hook 'after-init-hook (lambda () (load-theme 'rebecca)))
-;;set font
-;; (set-frame-font "Menlo 17" nil t)
+(setq backup-directory-alist '(("." . "~/.emacs_backup")))
 
 (global-set-key (kbd "C-.") 'set-mark-command)
 
+(require 'rainbow-delimiters)
+
+(require 'fill-column-indicator)
+(setq fci-rule-column 100)
+(setq fci-rule-width 1)
+(setq fci-rule-color "darkgrey")
+
+(require 'direnv)
+(direnv-mode)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook 'subword-mode)
+(add-hook 'prog-mode-hook 'fci-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 (setq mac-option-modifier 'super)
 (setq mac-command-modifier 'meta)
