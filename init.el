@@ -28,11 +28,10 @@
     auctex
     material-theme))
 
+(package-initialize)
 
 (when (not package-archive-contents)
     (package-refresh-contents))
-
-(package-initialize)
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -43,19 +42,22 @@
 
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
+(setenv "LANG" "en_US.UTF-8")
+(setenv "LC_ALL" "en_US.UTF-8")
+(setenv "LC_CTYPE" "en_US.UTF-8")
+
 ;; hide the startup message
 (setq inhibit-startup-message t)
 ;; hide toolbar
 (tool-bar-mode -1)
 ;; load material theme
 (load-theme 'material t)
-;; enable line numbers globally
-(global-linum-mode t)
 ;;display column number
 (column-number-mode t)
 ;;move all backup files to one directory
 (setq backup-directory-alist '(("." . "~/.emacs_backup")))
 
+(set-language-environment "UTF-8")
 (global-set-key (kbd "C-.") 'set-mark-command)
 
 (require 'rainbow-delimiters)
@@ -76,7 +78,7 @@
 
 (setq mac-option-modifier 'super)
 (setq mac-command-modifier 'meta)
-
+(set-frame-font "Menlo 15" nil t)
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
@@ -84,7 +86,11 @@
 ;; --------------------------------------
 ;; Enable elpy
 (elpy-enable)
-(elpy-use-ipython)
+(setq python-shell-interpreter "jupyter"
+      python-shell-interpreter-args "console --simple-prompt"
+      python-shell-prompt-detect-failure-warning nil)
+(add-to-list 'python-shell-completion-native-disabled-interpreters
+             "jupyter")
 
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
