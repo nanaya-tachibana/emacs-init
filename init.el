@@ -5,9 +5,9 @@
 (require 'package)
 
 ;; Add ELPA repositories
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+'("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 (defvar my-packages
@@ -40,6 +40,12 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+;; which key
+(use-package which-key
+:ensure t
+:config
+(which-key-mode))
+
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
 (set-language-environment "UTF-8")
@@ -61,6 +67,7 @@
 
 ;; set mark
 (global-set-key (kbd "C-.") 'set-mark-command)
+(global-unset-key (kbd "s-l"))
 
 (require 'rainbow-delimiters)
 
@@ -199,7 +206,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (cmake-mode vue-mode json-mode yaml-mode lsp-mode dockerfile-mode use-package smart-mode-line rainbow-delimiters neotree material-theme magit lsp-ui flycheck fill-column-indicator direnv company-lsp better-defaults auctex ace-window))))
+    (lsp-mode cmake-mode vue-mode json-mode yaml-mode dockerfile-mode use-package smart-mode-line rainbow-delimiters neotree material-theme magit lsp-ui flycheck fill-column-indicator direnv company-lsp better-defaults auctex ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
